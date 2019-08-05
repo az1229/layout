@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ks.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="ks.domain.User" >
+    <id column="KS_ID" property="ksId" jdbcType="INTEGER" />
+    <result column="KS_NAME" property="ksName" jdbcType="VARCHAR" />
+    <result column="KS_EMAIL" property="ksEmail" jdbcType="VARCHAR" />
+    <result column="KS_SUBJECT" property="ksSubject" jdbcType="VARCHAR" />
+    <result column="KS_MESSAGE" property="ksMessage" jdbcType="VARCHAR" />
+    <result column="KS_DATA" property="ksData" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    KS_ID, KS_NAME, KS_EMAIL, KS_SUBJECT, KS_MESSAGE, KS_DATA
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="ks.domain.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ks_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ks_user
+    where KS_ID = #{ksId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ks_user
+    where KS_ID = #{ksId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="ks.domain.UserExample" >
+    delete from ks_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="ks.domain.User" >
+    insert into ks_user (KS_ID, KS_NAME, KS_EMAIL, 
+      KS_SUBJECT, KS_MESSAGE, KS_DATA
+      )
+    values (#{ksId,jdbcType=INTEGER}, #{ksName,jdbcType=VARCHAR}, #{ksEmail,jdbcType=VARCHAR}, 
+      #{ksSubject,jdbcType=VARCHAR}, #{ksMessage,jdbcType=VARCHAR}, #{ksData,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="ks.domain.User" >
+    insert into ks_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ksId != null" >
+        KS_ID,
+      </if>
+      <if test="ksName != null" >
+        KS_NAME,
+      </if>
+      <if test="ksEmail != null" >
+        KS_EMAIL,
+      </if>
+      <if test="ksSubject != null" >
+        KS_SUBJECT,
+      </if>
+      <if test="ksMessage != null" >
+        KS_MESSAGE,
+      </if>
+      <if test="ksData != null" >
+        KS_DATA,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ksId != null" >
+        #{ksId,jdbcType=INTEGER},
+      </if>
+      <if test="ksName != null" >
+        #{ksName,jdbcType=VARCHAR},
+      </if>
+      <if test="ksEmail != null" >
+        #{ksEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="ksSubject != null" >
+        #{ksSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="ksMessage != null" >
+        #{ksMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="ksData != null" >
+        #{ksData,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="ks.domain.UserExample" resultType="java.lang.Integer" >
+    select count(*) from ks_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ks_user
+    <set >
+      <if test="record.ksId != null" >
+        KS_ID = #{record.ksId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ksName != null" >
+        KS_NAME = #{record.ksName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ksEmail != null" >
+        KS_EMAIL = #{record.ksEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ksSubject != null" >
+        KS_SUBJECT = #{record.ksSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ksMessage != null" >
+        KS_MESSAGE = #{record.ksMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ksData != null" >
+        KS_DATA = #{record.ksData,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ks_user
+    set KS_ID = #{record.ksId,jdbcType=INTEGER},
+      KS_NAME = #{record.ksName,jdbcType=VARCHAR},
+      KS_EMAIL = #{record.ksEmail,jdbcType=VARCHAR},
+      KS_SUBJECT = #{record.ksSubject,jdbcType=VARCHAR},
+      KS_MESSAGE = #{record.ksMessage,jdbcType=VARCHAR},
+      KS_DATA = #{record.ksData,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="ks.domain.User" >
+    update ks_user
+    <set >
+      <if test="ksName != null" >
+        KS_NAME = #{ksName,jdbcType=VARCHAR},
+      </if>
+      <if test="ksEmail != null" >
+        KS_EMAIL = #{ksEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="ksSubject != null" >
+        KS_SUBJECT = #{ksSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="ksMessage != null" >
+        KS_MESSAGE = #{ksMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="ksData != null" >
+        KS_DATA = #{ksData,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where KS_ID = #{ksId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ks.domain.User" >
+    update ks_user
+    set KS_NAME = #{ksName,jdbcType=VARCHAR},
+      KS_EMAIL = #{ksEmail,jdbcType=VARCHAR},
+      KS_SUBJECT = #{ksSubject,jdbcType=VARCHAR},
+      KS_MESSAGE = #{ksMessage,jdbcType=VARCHAR},
+      KS_DATA = #{ksData,jdbcType=TIMESTAMP}
+    where KS_ID = #{ksId,jdbcType=INTEGER}
+  </update>
+</mapper>

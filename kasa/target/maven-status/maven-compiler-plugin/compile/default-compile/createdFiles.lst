@@ -1,0 +1,9 @@
+ks\service\impl\UserServiceImpl.class
+ks\mapper\UserMapper.class
+ks\domain\User.class
+ks\service\UserService.class
+ks\Controller\UserController.class
+ks\domain\UserExample$GeneratedCriteria.class
+ks\domain\UserExample.class
+ks\domain\UserExample$Criteria.class
+ks\domain\UserExample$Criterion.class
